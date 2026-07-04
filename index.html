@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-
-<!--
-UI theme generated with assistance from https://claude.ai/chat/b51c9083-8eef-487a-9e4c-631506b918fa
--->
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nathan Murthy</title>
+<script>
+  (function () {
+    var stored = localStorage.getItem('theme');
+    var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -21,6 +23,14 @@ UI theme generated with assistance from https://claude.ai/chat/b51c9083-8eef-487
     --hairline: #DEDAD2;
   }
 
+  html[data-theme="dark"] {
+    --paper: #14181B;
+    --ink: #EDEBE6;
+    --accent: #4A9C96;
+    --muted: #837D71;
+    --hairline: #2A2E30;
+  }
+
   * { box-sizing: border-box; }
 
   html, body {
@@ -28,6 +38,7 @@ UI theme generated with assistance from https://claude.ai/chat/b51c9083-8eef-487
     padding: 0;
     background: var(--paper);
     color: var(--ink);
+    transition: background 0.2s ease, color 0.2s ease;
   }
 
   body {
@@ -150,9 +161,51 @@ UI theme generated with assistance from https://claude.ai/chat/b51c9083-8eef-487
     color: var(--muted);
     font-size: 0.8rem;
   }
+
+  .theme-toggle {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--hairline);
+    border-radius: 50%;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+    padding: 0;
+  }
+
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .theme-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .theme-toggle .icon-moon { display: none; }
+  html[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+  html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
 </style>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
 <main>
   <h1>Nathan Murthy<span class="cursor">_</span></h1>
   <p class="role">Head of Engineering @ Verse &nbsp;·&nbsp; ex Tesla, Stripe</p>
@@ -172,5 +225,13 @@ UI theme generated with assistance from https://claude.ai/chat/b51c9083-8eef-487
     <li><a href="https://www.ocf.berkeley.edu/~nmurthy/Documents">ocf.berkeley.edu/~nmurthy/Documents</a> <span class="meta">(last: 1 June 2022)</span></li>
   </ul>
 </main>
+<script>
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var root = document.documentElement;
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+</script>
 </body>
 </html>
